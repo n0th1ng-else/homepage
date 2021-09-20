@@ -1,0 +1,61 @@
+name: Update Browserlist DB
+
+on: pull_request
+
+jobs:
+  browserlist-db:
+    runs-on: ubuntu-latest
+    env:
+      GH_BROWSERLIST_BRANCH: update-browserlist-db
+      GH_DEV_BRANCH: dev
+      COMMIT_TITLE: 'perf(): Deliver the Browserslist DB update'
+
+    name: Updates the browserlist db
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GH_DEV_BRANCH }}
+
+      - name: ⬇️ Set github username
+        run: git config user.name ${{ secrets.GH_AUTHOR_LOGIN }}
+
+      - name: ⬇️ Set github email
+        run: git config user.email ${{ secrets.GH_AUTHOR_EMAIL }}
+
+      - name: ⬇️ Fetch git tree
+        run: git fetch --all
+
+      - name: ⎔ Set up node using nvm
+        uses: dcodeIO/setup-node-nvm@v4
+
+      - name: ▶️ Install Dependencies
+        run: npm ci
+
+      - name: 🚀 Run the update-db command
+        run: npx browserslist@latest --update-db
+
+      - name: ▶️ Create release branch
+        run: git checkout -b $GH_BROWSERLIST_BRANCH
+
+      - name: 📥 Add files into version control
+        run: git add .
+
+      - name: 📥 Commit release files
+        run: git commit -m '${{ env.COMMIT_TITLE }}'
+
+      - name: 📥 Push changes into the branch
+        if: success()
+        run: git push --force --set-upstream origin $GH_BROWSERLIST_BRANCH
+
+      - name: 🏗 Create Pull-Request into dist branch
+        if: success()
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.GH_BROWSERLIST_BRANCH }}
+          destination_branch: ${{ env.GH_DEV_BRANCH }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log a message if nothing to commit
+        if: failure()
+        run: echo 'Everything is up to date'
