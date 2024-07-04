@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve as resolvePath } from 'node:path';
 import parseMD from 'parse-md';
-import { Marked, Renderer } from 'marked';
+import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
 import { Logger } from './log.js';
@@ -44,49 +44,63 @@ export const getReadingTime = (raw, parsed) => {
  * @param raw {string}
  */
 export const parseMarkdown = async raw => {
-	const renderer = new Renderer();
-	renderer.link = (href, title, text) =>
-		[
-			`<a class="mkdn-link" target="_blank" href="${href}"`,
-			title && ` title="${title}"`,
-			`>${text}</a>`
-		]
-			.filter(Boolean)
-			.join('');
+	const parser = new Marked();
+	parser.use({
+		useNewRenderer: true,
+		renderer: {
+			heading({ tokens, depth }) {
+				const text = this.parser.parseInline(tokens);
+				const level = depth;
+				return `<h${level} class="mkdn-h${level}">${text}</h${level}>\n`;
+			},
+			paragraph({ tokens }) {
+				const text = this.parser.parseInline(tokens);
+				return `<p class="mkdn-p">${text}</p>\n`;
+			},
+			strong({ tokens }) {
+				const text = this.parser.parseInline(tokens);
+				return `<strong class="mkdn-bold">${text}</strong>`;
+			},
+			codespan({ text }) {
+				return `<code class="mkdn-code">${text}</code>`;
+			},
+			listitem({ tokens }) {
+				const text = this.parser.parseInline(tokens);
+				return `<li class="mkdn-li">${text}</li>\n`;
+			},
+			list({ ordered, start, items }) {
+				const body = items.reduce((acc, item) => `${acc}${this.listitem(item)}`, '');
 
-	renderer.image = (href, title, text) =>
-		[
-			`<img class="mkdn-img" src="${href}"`,
-			text && ` alt="${text}"`,
-			title && ` title="${title}"`,
-			'>'
-		]
-			.filter(Boolean)
-			.join('');
-
-	renderer.strong = text => `<strong class="mkdn-bold">${text}</strong>`;
-
-	renderer.codespan = text => `<code class="mkdn-code">${text}</code>`;
-
-	renderer.list = (body, ordered, start) => {
-		const type = ordered ? 'ol' : 'ul';
-		return [
-			`<${type} class="mkdn-${type}"`,
-			ordered && start !== 1 ? ' start="' + start + '"' : '',
-			`>\n${body}</${type}>\n`
-		]
-			.filter(Boolean)
-			.join('');
-	};
-
-	renderer.listitem = text => `<li class="mkdn-li">${text}</li>\n`;
-
-	renderer.heading = (text, level) => `<h${level} class="mkdn-h${level}">${text}</h${level}>\n`;
-
-	renderer.paragraph = text => `<p class="mkdn-p">${text}</p>\n`;
-
-	const parser = new Marked({
-		renderer
+				const type = ordered ? 'ol' : 'ul';
+				return [
+					`<${type} class="mkdn-${type}"`,
+					ordered && start !== 1 ? ' start="' + start + '"' : '',
+					`>\n${body}</${type}>\n`
+				]
+					.filter(Boolean)
+					.join('');
+			},
+			image({ href, title, text }) {
+				return [
+					`<img class="mkdn-img" src="${href}"`,
+					text && ` alt="${text}"`,
+					title && ` title="${title}"`,
+					'>'
+				]
+					.filter(Boolean)
+					.join('');
+			},
+			link({ href, title, tokens }) {
+				const text = this.parser.parseInline(tokens);
+				return [
+					`<a class="mkdn-link" target="_blank" href="${href}"`,
+					title && ` title="${title}"`,
+					`>${text}</a>`
+				]
+					.filter(Boolean)
+					.join('');
+			}
+		}
 	});
 
 	parser.use(
@@ -205,6 +219,7 @@ const getPublicationInfo = async (slug, location) => {
 			slug
 		);
 
+		logger.writeOutput(`${publication.id}. ${publication.meta.title}`);
 		return publication;
 	} catch (err) {
 		logger.writeError(`Unable to read article ${slug}`, err);
