@@ -1,4 +1,4 @@
-FROM node:20.11.0 as builder
+FROM node:20.14-slim as builder
 
 ENV NODE_ENV production
 
@@ -50,7 +50,7 @@ RUN npm run build
 
 # Run stage layer
 
-FROM node:20.11.0
+FROM node:20.14-slim
 
 ARG APP_DIR=/usr/src/app/
 
