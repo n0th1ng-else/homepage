@@ -69,7 +69,7 @@
 		"prepare": "svelte-kit sync",
 		"draft": "node src/ci/create-md.js",
 		"welcome": "node src/ci/welcome.js",
-		"start": "pnpm welcome && pnpm server"
+		"start": "pnpm run welcome && pnpm run server"
 	},
 	"type": "module",
 	"keywords": [
