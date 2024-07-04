@@ -71,6 +71,8 @@ COPY --from=builder $APP_DIR/meta $APP_DIR/meta
 COPY --from=builder $APP_DIR/src/ci/dirs.js $APP_DIR/src/ci/dirs.js
 COPY --from=builder $APP_DIR/src/ci/welcome.js $APP_DIR/src/ci/welcome.js
 
+RUN npm install -g pnpm@9
+
 EXPOSE 8080
 
 USER node
