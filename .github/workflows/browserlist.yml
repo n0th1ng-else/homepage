@@ -29,8 +29,11 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: ▶️ Install Dependencies
-        run: npm ci
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: |
+            args: [--frozen-lockfile]
 
       - name: 🚧 Create a branch
         uses: peterjgrainger/action-create-branch@v2.0.1

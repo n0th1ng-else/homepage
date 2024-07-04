@@ -22,11 +22,14 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Install Dependencies
-        run: npm ci
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: |
+            args: [--frozen-lockfile]
 
       - name: Detect new version (and publish in main branch)
-        run: npm run version
+        run: pnpm run version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,11 +58,14 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Install Dependencies
-        run: npm ci
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: |
+            args: [--frozen-lockfile]
 
       - name: Run ${{ matrix.cmd }}
-        run: npm run ${{ matrix.cmd }}
+        run: pnpm run ${{ matrix.cmd }}
 
   docker:
     runs-on: ubuntu-latest
