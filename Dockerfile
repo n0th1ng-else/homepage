@@ -1,4 +1,4 @@
-FROM node:20.11.0 as builder
+FROM node:20.14-slim as builder
 
 ENV NODE_ENV production
 
@@ -31,8 +31,10 @@ ENV GH_AUTHOR_TWITTER ${GH_AUTHOR_TWITTER}
 ARG GH_AUTHOR_DEVTO
 ENV GH_AUTHOR_DEVTO ${GH_AUTHOR_DEVTO}
 
-COPY package.json package-lock.json svelte.config.js $APP_DIR
-RUN npm ci --include=dev && npm cache clean --force
+RUN npm install -g pnpm@9
+COPY package.json pnpm-lock.yaml svelte.config.js $APP_DIR
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --prod false
+
 
 COPY . $APP_DIR
 
@@ -44,13 +46,13 @@ ENV APP_VERSION ${APP_VERSION}
 
 RUN echo ${APP_VERSION} ${COMMIT_HASH}
 
-RUN npm run meta
+RUN pnpm meta
 
-RUN npm run build
+RUN pnpm build
 
 # Run stage layer
 
-FROM node:20.11.0
+FROM node:20.14-slim
 
 ARG APP_DIR=/usr/src/app/
 
@@ -73,4 +75,4 @@ EXPOSE 8080
 
 USER node
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
