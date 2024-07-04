@@ -1,6 +1,6 @@
 import type { PackageInfo, ProfileAccounts } from '$lib/common/@types/common';
 import { getGithubLink } from './links';
-import nssLogo from '../../../assets/images/nss-logo.png';
+import nssLogo from '../../../assets/images/nss-logo.svg';
 import setronicaLogo from '../../../assets/images/setronica-logo.png';
 import catawikiLogo from '../../../assets/images/catawiki-logo.svg';
 import tradeshiftLogo from '../../../assets/images/tradeshift-logo.svg';
@@ -8,8 +8,9 @@ import miroLogo from '../../../assets/images/miro-logo.svg';
 
 export enum Position {
 	Fullstack,
-	FrontendL1,
-	FrontendL2
+	Middle,
+	Senior,
+	SeniorL1
 }
 
 export interface ProjectItem {
@@ -40,7 +41,7 @@ const getSetronica = (): ProjectItem => ({
 	logo: setronicaLogo,
 	url: 'https://setronica.com',
 	tags: ['React', 'Angular', 'NodeJS'],
-	position: Position.FrontendL1,
+	position: Position.Senior,
 	startDate: '01-09-2016',
 	endDate: '01-06-2021'
 });
@@ -50,7 +51,7 @@ const getTradeshift = (): ProjectItem => ({
 	logo: tradeshiftLogo,
 	url: 'https://tradeshift.com',
 	tags: ['React', 'Angular', 'NodeJS'],
-	position: Position.FrontendL1,
+	position: Position.Senior,
 	startDate: '01-09-2016',
 	endDate: '01-06-2021'
 });
@@ -60,7 +61,7 @@ const getCatawiki = (): ProjectItem => ({
 	logo: catawikiLogo,
 	url: 'https://www.catawiki.com',
 	tags: ['React', 'k8s', 'NodeJS'],
-	position: Position.FrontendL1,
+	position: Position.SeniorL1,
 	startDate: '01-07-2021',
 	endDate: '31-10-2022'
 });
@@ -70,7 +71,7 @@ const getMiro = (): ProjectItem => ({
 	logo: miroLogo,
 	url: 'https://www.miro.com',
 	tags: ['React', 'NextJS'],
-	position: Position.FrontendL2,
+	position: Position.SeniorL1,
 	startDate: '01-11-2022'
 });
 

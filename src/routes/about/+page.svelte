@@ -12,7 +12,7 @@
 	import Paragraph from '$lib/browser/ui/Paragraph.svelte';
 	import EmailElement from '$lib/browser/components/EmailElement.svelte';
 	import { aboutTitle as title } from '$lib/common/labels';
-	import { getGitHubContact, getTwitterContact } from '$lib/browser/utils/contacts';
+	import { getGitHubContact, getXContact } from '$lib/browser/utils/contacts';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -21,7 +21,7 @@
 
 	const photo = $profileStore?.image ?? '';
 	const github = $accountsStore ? getGitHubContact($accountsStore) : null;
-	const twitter = $accountsStore ? getTwitterContact($accountsStore) : null;
+	const twitter = $accountsStore ? getXContact($accountsStore) : null;
 
 	const scroll = (): void => {
 		if (!browser) {

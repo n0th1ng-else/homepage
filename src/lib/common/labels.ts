@@ -31,9 +31,11 @@ export const getServiceTitle = (article: PublicationInfo): string => {
 
 export const getPositionTitle = (position?: Position): string => {
 	switch (position) {
-		case Position.FrontendL2:
+		case Position.Middle:
 			return 'Software Engineer II';
-		case Position.FrontendL1:
+		case Position.SeniorL1:
+			return 'Senior Software Engineer I';
+		case Position.Senior:
 			return 'Senior Frontend Engineer';
 		case Position.Fullstack:
 			return 'FullStack Engineer';

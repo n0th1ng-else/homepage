@@ -3,16 +3,16 @@ import {
 	getGithubLink,
 	getHabrLink,
 	getMediumLink,
-	getTwitterLink,
+	getXLink,
 	getDevtoLink,
 	getLinkedInLink
 } from './links';
-import twitterLogo from '../../../assets/images/twitter-logo.svg';
-import githubLogo from '../../../assets/images/github-logo.png';
-import mediumLogo from '../../../assets/images/medium-logo.png';
+import xLogo from '../../../assets/images/x-logo.svg';
+import githubLogo from '../../../assets/images/github-logo.svg';
+import mediumLogo from '../../../assets/images/medium-logo.svg';
 import habrLogo from '../../../assets/images/habr-logo.svg';
-import devtoLogo from '../../../assets/images/devto-logo.svg';
-import linkedinLogo from '../../../assets/images/linkedin-logo.png';
+import devtoLogo from '../../../assets/images/dev-logo.svg';
+import linkedinLogo from '../../../assets/images/linkedin-logo.svg';
 
 enum ContactType {
 	Location,
@@ -49,10 +49,10 @@ class ContactModel {
 	}
 }
 
-export const getTwitterContact = (accounts: ProfileAccounts): ContactModel => {
-	const contact = new ContactModel('Twitter');
-	contact.link = getTwitterLink(accounts.twitter);
-	contact.image = twitterLogo;
+export const getXContact = (accounts: ProfileAccounts): ContactModel => {
+	const contact = new ContactModel('X');
+	contact.link = getXLink(accounts.twitter);
+	contact.image = xLogo;
 	return contact;
 };
 
@@ -96,6 +96,6 @@ export const getSocialNetworks = (accounts: ProfileAccounts): ContactModel[] => 
 	getMediumContact(accounts),
 	getDevtoContact(accounts),
 	getGitHubContact(accounts),
-	getTwitterContact(accounts),
+	getXContact(accounts),
 	getLinkedInContact(accounts)
 ];

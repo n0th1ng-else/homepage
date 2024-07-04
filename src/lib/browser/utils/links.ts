@@ -5,7 +5,7 @@ export const getEmail = (full = false): [string, string, string] => {
 	return full ? [`${parts[0]}@${parts[1]}.${parts[2]}`, '', ''] : parts;
 };
 
-export const getTwitterLink = (account: string): string => getUrlPrefix(`twitter.com/${account}`);
+export const getXLink = (account: string): string => getUrlPrefix(`x.com/${account}`);
 
 export const getMediumLink = (account: string): string => getUrlPrefix(`${account}.medium.com`);
 
