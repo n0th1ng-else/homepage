@@ -46,7 +46,6 @@ export const getReadingTime = (raw, parsed) => {
 export const parseMarkdown = async raw => {
 	const parser = new Marked();
 	parser.use({
-		useNewRenderer: true,
 		renderer: {
 			heading({ tokens, depth }) {
 				const text = this.parser.parseInline(tokens);
