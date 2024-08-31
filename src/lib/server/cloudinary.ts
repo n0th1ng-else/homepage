@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
 import { sortAsText } from '$lib/common/sort';
-import { getUrlPrefix } from '$lib/common/api';
+import { getUrlPrefix, runRawApi } from '$lib/common/api';
+import { getRuntimeEnvironment } from '$lib/server/env';
 
 const generateSha1Hash = (data: string): string => {
 	const sha = createHash('sha1');
@@ -8,14 +9,14 @@ const generateSha1Hash = (data: string): string => {
 	return sha.digest('hex');
 };
 
-export enum CloudinaryResource {
+export const enum CloudinaryResource {
 	Image = 'image',
 	Raw = 'raw',
 	Video = 'video',
 	Auto = 'auto'
 }
 
-export interface BaseCloudinaryPayload {
+interface BaseCloudinaryPayload {
 	api_key: string;
 	cloud_name?: string;
 	resource_type: CloudinaryResource;
@@ -23,16 +24,15 @@ export interface BaseCloudinaryPayload {
 	public_id?: string;
 	eager?: string;
 	upload_preset: string;
+	tags?: string;
+	invalidate?: 'true';
 }
 
-export interface SignedCloudinaryPayload extends BaseCloudinaryPayload {
+interface SignedCloudinaryPayload extends BaseCloudinaryPayload {
 	signature: string;
 }
 
-export const signPayload = (
-	payload: BaseCloudinaryPayload,
-	secret: string
-): SignedCloudinaryPayload => {
+const signPayload = (payload: BaseCloudinaryPayload, secret: string): SignedCloudinaryPayload => {
 	const omitted = ['cloud_name', 'resource_type', 'api_key'];
 	const pairs: string[] = [];
 	for (const [key, value] of Object.entries(payload)) {
@@ -49,5 +49,37 @@ export const signPayload = (
 	};
 };
 
-export const getUrl = (account: string, type: CloudinaryResource): string =>
+const getUrl = (account: string, type: CloudinaryResource): string =>
 	getUrlPrefix(`api.cloudinary.com/v1_1/${account}/${type}/upload`);
+
+export const uploadFile = async (
+	type: CloudinaryResource,
+	form: FormData,
+	opts: Pick<BaseCloudinaryPayload, 'tags' | 'public_id' | 'invalidate'> = {}
+): Promise<string> => {
+	const env = getRuntimeEnvironment();
+
+	const api = {
+		account: env.CLOUDINARY_ACCOUNT,
+		key: env.CLOUDINARY_KEY,
+		secret: env.CLOUDINARY_SECRET
+	};
+
+	const payload: BaseCloudinaryPayload = {
+		api_key: api.key,
+		timestamp: new Date().getTime(),
+		resource_type: type,
+		upload_preset: 'default',
+		...opts
+	};
+
+	const url = getUrl(api.account, type);
+	const signed = signPayload(payload, api.secret);
+
+	for (const [key, value] of Object.entries(signed)) {
+		form.append(key, value);
+	}
+
+	const cloudinaryResponse = await runRawApi<{ url: string }, FormData>(url, 'POST', {}, form);
+	return cloudinaryResponse.url;
+};

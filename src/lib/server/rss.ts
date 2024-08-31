@@ -37,7 +37,7 @@ const getRssArticles = (url: string, articles: PublicationInfo[]): string =>
 		)
 		.join('');
 
-const getRssChannel = (url: string, articles: string, photo: string): string =>
+const getRssChannel = (url: string, articles: string, photo?: string): string =>
 	`<channel>
         <atom:link href="${getAbsoluteRssUrl(url)}" rel="self" type="application/rss+xml" />
         <title>Nothing Else | Sergey Nikitin</title>
@@ -59,8 +59,8 @@ const getRssContainer = (channel: string): string =>
 
 export const generateRss = (
 	url: string,
-	profileImage: string,
-	articles: PublicationInfo[]
+	articles: PublicationInfo[],
+	profileImage?: string
 ): string => {
 	const rssData = getRssArticles(url, articles);
 	const channel = getRssChannel(url, rssData, profileImage);

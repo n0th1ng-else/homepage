@@ -1,47 +1,45 @@
 <script lang="ts">
 	import { profileStore } from '$lib/browser/stores';
 	import Title from '$lib/browser/ui/Title.svelte';
-	import SubTitle from '$lib/browser/ui/SubTitle.svelte';
-	import TextArea from '$lib/browser/ui/TextArea.svelte';
-	import Button from '$lib/browser/ui/Button.svelte';
+	import List from '$lib/browser/ui/List.svelte';
 	import Meta from '$lib/browser/ui/Meta.svelte';
+	import Link from '$lib/browser/ui/Link.svelte';
 	import { projectsTitle as title } from '$lib/common/labels';
-	import { getAuthUrl } from '$lib/common/api';
-	import type { ReadingListItemState } from '$lib/common/readingList';
+	import { sortByDate } from '$lib/common/date';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	const { url } = data;
-
-	let articleLink = '';
-	let articleComment = '';
-
-	const authoriseAndPublish = async () => {
-		if (!articleLink) {
-			alert('No link specified');
-			return;
-		}
-
-		const state: ReadingListItemState = { action: 'READS', url: articleLink, note: articleComment };
-		const { url: githubUrl } = await getAuthUrl(encodeURIComponent(JSON.stringify(state)));
-		window.open(githubUrl, '_blank');
-	};
+	const { url, items } = data;
+	const sorted = sortByDate(items, item => new Date(item.date));
 </script>
 
-<Meta image="{$profileStore?.image ?? ''}" description="My reading list. Add an article" {url} />
+<Meta image="{$profileStore?.image ?? ''}" description="My reading list" {url} />
 <article>
-	<Title>Add an article</Title>
-	<SubTitle>Add an article in my reading list</SubTitle>
-	<div>
-		<TextArea bind:text="{articleLink}" placeholder="Enter the link"></TextArea>
-	</div>
-	<div>
-		<TextArea bind:text="{articleComment}" placeholder="Enter the comment"></TextArea>
-	</div>
-	<div>
-		<Button on:click="{authoriseAndPublish}">Save</Button>
-	</div>
+	<Title>Reading list</Title>
+	<List>
+		{#each sorted as item}
+			<li class="reading-list-item">
+				<div class="info">
+					<div>
+						<Link inline external url="{item.url}">
+							{item.title}
+						</Link>
+					</div>
+					{#if item.note}
+						<div>
+							– {item.note}
+						</div>
+					{/if}
+				</div>
+				{#if item.image}
+					<div>
+						<img class="image" src="{item.image}" alt="" />
+					</div>
+				{/if}
+			</li>
+		{/each}
+	</List>
 </article>
 
 <svelte:head>
@@ -49,4 +47,21 @@
 </svelte:head>
 
 <style lang="scss">
+	@import '../../global';
+
+	.reading-list-item {
+		margin-block-end: $unit-plus;
+		display: flex;
+		gap: $unit;
+	}
+
+	.image {
+		height: $unit-triple;
+		width: $unit-triple;
+		object-fit: contain;
+	}
+
+	.info {
+		flex: 1;
+	}
 </style>

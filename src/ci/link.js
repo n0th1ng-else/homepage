@@ -1,13 +1,4 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import scrapper from 'metascraper';
-import sauthor from 'metascraper-author';
-import sdate from 'metascraper-date';
-import sdescription from 'metascraper-description';
-import simage from 'metascraper-image';
-import slogo from 'metascraper-logo';
-import spublisher from 'metascraper-publisher';
-import stitle from 'metascraper-title';
-import surl from 'metascraper-url';
 import { env } from './env.js';
 import { getPathUrl, metaFileName, metaFolderName } from './dirs.js';
 
@@ -61,28 +52,5 @@ export const getFullLink = (data, service, path = '', lang = '') => {
 		.replace('%l', lang);
 	return `https://${url}`;
 };
-
-const metascraper = scrapper([
-	sauthor(),
-	sdate(),
-	sdescription(),
-	simage(),
-	slogo(),
-	spublisher(),
-	stitle(),
-	surl()
-]);
-
-/**
- *
- * @param url {string}
- */
-const getLinkHtml = url => fetch(url).then(result => result.text());
-
-/**
- *
- * @param url {string}
- */
-export const getLinkInfo = async url => getLinkHtml(url).then(html => metascraper({ html, url }));
 
 export const sleepFor = (ms = 1000) => new Promise(resolve => setTimeout(resolve, ms));
