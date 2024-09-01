@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { getFullLink, getLinkInfo, sleepFor } from './link.js';
+import { getFullLink, sleepFor } from './link.js';
 import { Logger } from './log.js';
+import { getLinkInfo } from '../lib/server/meta.js';
 
 const logger = new Logger('packages');
 

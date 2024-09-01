@@ -1,18 +1,20 @@
 import { format, getYear } from 'date-fns';
 import type { PublicationInfo } from '$lib/common/@types/common';
 
-export enum One {
+export const enum One {
 	Second = 1_000,
 	Minute = 60 * 1_000,
 	Hour = 60 * 60 * 1_000,
 	Day = 24 * 60 * 60 * 1_000
 }
 
-export enum Timeout {
+export const enum Timeout {
 	Fast = 100
 }
 
 export const getDateTime = (date: Date): string => format(date, 'HH:mm:ss');
+
+export const getDateString = (date: Date): string => format(date, 'yyyy-MM-dd');
 
 export const getRelativeDate = (dateInPast?: string | null): string => {
 	if (!dateInPast) {
@@ -23,14 +25,17 @@ export const getRelativeDate = (dateInPast?: string | null): string => {
 	return format(dateToConvert, 'd MMMM, yyyy');
 };
 
+export const sortByDate = <Item>(list: Item[], handler: (i: Item) => Date): Item[] =>
+	list.sort((iA, iB) => handler(iB).getTime() - handler(iA).getTime());
+
 export const getArticleDate = (item: PublicationInfo): Date =>
 	item.meta.date ? new Date(item.meta.date) : new Date(0);
 
-export const sortByDate = (list: PublicationInfo[]): PublicationInfo[] =>
-	list.sort((iA, iB) => getArticleDate(iB).getTime() - getArticleDate(iA).getTime());
+export const sortArticlesByDate = (list: PublicationInfo[]): PublicationInfo[] =>
+	sortByDate(list, i => getArticleDate(i));
 
 export const groupByYear = (list: PublicationInfo[]): Record<number, PublicationInfo[]> =>
-	sortByDate(list).reduce<Record<number, PublicationInfo[]>>((chunks, info) => {
+	sortArticlesByDate(list).reduce<Record<number, PublicationInfo[]>>((chunks, info) => {
 		const year = getYear(getArticleDate(info));
 		if (chunks[year]) {
 			chunks[year] = [...chunks[year], info];

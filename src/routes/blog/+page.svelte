@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { profileStore } from '$lib/browser/stores';
-	import { toArticle } from '$lib/common/routes';
-	import { groupByYear, getRelativeDate, sortByDate } from '$lib/common/date';
 	import Title from '$lib/browser/ui/Title.svelte';
 	import SubTitle from '$lib/browser/ui/SubTitle.svelte';
 	import Link from '$lib/browser/ui/Link.svelte';
 	import List from '$lib/browser/ui/List.svelte';
 	import Meta from '$lib/browser/ui/Meta.svelte';
 	import Paragraph from '$lib/browser/ui/Paragraph.svelte';
+	import { toArticle } from '$lib/common/routes';
+	import { groupByYear, getRelativeDate } from '$lib/common/date';
 	import { sortAsNumber } from '$lib/common/sort';
 	import { blogTitle as title } from '$lib/common/labels';
 	import type { PublicationInfo } from '$lib/common/@types/common';
+	import { sortArticlesByDate } from '$lib/common/date.js';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -20,7 +21,7 @@
 	const groups = groupByYear(articles);
 	const years = sortAsNumber(Object.keys(groups));
 	const getGroup = (year: string): PublicationInfo[] => {
-		return sortByDate(groups[year]);
+		return sortArticlesByDate(groups[year]);
 	};
 
 	const getUrl = (item: PublicationInfo): string => {

@@ -13,7 +13,7 @@ export const doesFileExist = (dir: string, filename: string): boolean => {
 	try {
 		fs.accessSync(path.join(dir, filename), fs.constants.F_OK);
 		return true;
-	} catch (e) {
+	} catch (err) {
 		return false;
 	}
 };

@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs';
-import { getFullLink, getLinkInfo, saveMetaToFile } from './link.js';
+import { getFullLink, saveMetaToFile } from './link.js';
 import { env } from './env.js';
 import { Logger } from './log.js';
 import { getExternalPublications } from './external.js';
 import { getInternalPublications } from './internal.js';
 import { getExternalPackagesInfo } from './packages.js';
 import { externalResourcesFile, rootDir, rootDirURL } from './dirs.js';
+import { getLinkInfo } from '../lib/server/meta.js';
 
 const logger = new Logger('links');
 

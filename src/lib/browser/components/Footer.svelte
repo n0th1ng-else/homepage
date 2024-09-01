@@ -2,18 +2,20 @@
 	import { accountsStore } from '$lib/browser/stores/accounts';
 	import { versionStore } from '$lib/browser/stores/version';
 	import { getFirstContentfulPaint } from '$lib/browser/utils/vitals';
-	import { getVersion } from '$lib/common/version';
-	import { legalRoute } from '$lib/common/routes';
-	import { getCurrentYear } from '$lib/common/date';
 	import AdditionalText from '$lib/browser/ui/AdditionalText.svelte';
 	import Footer from '$lib/browser/ui/Footer.svelte';
 	import Link from '$lib/browser/ui/Link.svelte';
+	import { getLinkedInContact } from '$lib/browser/utils/contacts';
+	import { getVersion } from '$lib/common/version';
+	import { legalRoute } from '$lib/common/routes';
+	import { getCurrentYear } from '$lib/common/date';
 
 	import SocialNetworks from './SocialNetworks.svelte';
 
 	export let showFCP: boolean;
 	const version = getVersion($versionStore);
 	const year = getCurrentYear();
+	const profileLink = $accountsStore ? getLinkedInContact($accountsStore).link : '';
 
 	let fcp = '';
 	if (showFCP) {
@@ -40,7 +42,13 @@
 	</div>
 	<div class="author on-right w-space">
 		<p>
-			<AdditionalText>© {year} Sergey Nikitin</AdditionalText>
+			{#if profileLink}
+				<AdditionalText
+					>© {year} <Link inline external url="{profileLink}">Sergey Nikitin</Link></AdditionalText
+				>
+			{:else}
+				<AdditionalText>© {year} Sergey Nikitin</AdditionalText>
+			{/if}
 		</p>
 		<p>
 			<AdditionalText>

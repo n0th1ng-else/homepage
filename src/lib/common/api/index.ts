@@ -1,5 +1,5 @@
 import type { ProfileAccounts, PublicationInfo, PackageInfo, ProfileInfo } from '../@types/common';
-import type { ImageResponse, Version } from './types';
+import type { UrlResponse, Version } from './types';
 import type { WithPagination } from '../types';
 
 type RequestConfig = {
@@ -14,17 +14,26 @@ export const runRawApi = async <Res = unknown, Req extends string | FormData = s
 	headers: Record<string, string> = {},
 	body?: Req
 ): Promise<Res> => {
-	return fetch(url, {
+	const response = await fetch(url, {
 		method,
 		headers,
 		body,
 		credentials: 'same-origin'
-	}).then(response => {
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
-		return response.json();
 	});
+	if (!response.ok) {
+		let cause = response;
+		try {
+			const json = await response.json();
+			cause = json;
+		} catch {
+			// Do nothing, it's fine I guess
+		}
+
+		throw new Error(response.statusText, { cause });
+	}
+
+	const json = await response.json();
+	return json;
 };
 
 export const runApi = async <Res = unknown, Req = unknown>(
@@ -71,8 +80,11 @@ const withQuery = (url: string, params: Record<string, unknown>): string => {
 
 // Browser API ----------------------------------------------------------------
 
-export const uploadImage = (form: FormData): Promise<ImageResponse> =>
+export const uploadImage = (form: FormData): Promise<UrlResponse> =>
 	runRawApi(getApiPath('upload-image'), 'POST', {}, form);
+
+export const getAuthUrl = (state: string): Promise<UrlResponse> =>
+	runRawApi(getApiPath(`oauth/url?state=${state}`), 'GET');
 
 // Server API ----------------------------------------------------------------
 export const getProfile = (host: string): Promise<ProfileInfo> =>
@@ -85,7 +97,7 @@ export const getArticles = (
 	host: string,
 	draft?: boolean
 ): Promise<WithPagination<PublicationInfo>> =>
-	runApi(withQuery(getApiPath(`articles`, host), { draft }));
+	runApi(withQuery(getApiPath('articles', host), { draft }));
 
 export const getArticle = (host: string, slug: string, draft?: boolean): Promise<PublicationInfo> =>
 	runApi(withQuery(getApiPath(`articles/${slug}`, host), { draft }));

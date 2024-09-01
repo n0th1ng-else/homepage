@@ -1,9 +1,9 @@
 import { getArticles } from '$lib/common/api';
 import { Logger } from '$lib/common/log';
-import { shouldShowDraft } from '$lib/server/url';
-import { sortByDate } from '$lib/common/date';
+import { sortArticlesByDate } from '$lib/common/date';
 import { getEnglishArticles } from '$lib/common/language';
 import type { PublicationInfo } from '$lib/common/@types/common';
+import { shouldShowDraft } from '$lib/server/url';
 import type { PageServerLoad } from './$types';
 
 interface Output {
@@ -17,7 +17,7 @@ export const load: PageServerLoad<Output> = async ({ url }) => {
 	try {
 		const articles = await getArticles(url.origin, showDraft);
 		const engArticles = getEnglishArticles(articles.items);
-		const sortedArticles = sortByDate(engArticles);
+		const sortedArticles = sortArticlesByDate(engArticles);
 		const article = sortedArticles.at(0);
 
 		return {

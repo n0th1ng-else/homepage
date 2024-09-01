@@ -84,7 +84,7 @@ const getDevtoContact = (accounts: ProfileAccounts): ContactModel => {
 	return contact;
 };
 
-const getLinkedInContact = (accounts: ProfileAccounts): ContactModel => {
+export const getLinkedInContact = (accounts: ProfileAccounts): ContactModel => {
 	const contact = new ContactModel('LinkedIn');
 	contact.link = getLinkedInLink(accounts.linkedIn);
 	contact.image = linkedinLogo;

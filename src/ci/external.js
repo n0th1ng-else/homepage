@@ -1,6 +1,7 @@
 import { Logger } from './log.js';
 import { getBasePublication, getPublication } from './publication.js';
-import { getFullLink, getLinkInfo, sleepFor } from './link.js';
+import { getFullLink, sleepFor } from './link.js';
+import { getLinkInfo } from '../lib/server/meta.js';
 
 const logger = new Logger('external-links');
 

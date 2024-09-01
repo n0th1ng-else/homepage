@@ -23,7 +23,7 @@
 			<Link external url="{network.link}">
 				<img
 					src="{network.image}"
-					alt="{network.title}"
+					alt="{network.title} profile link"
 					class="logo"
 					class:l="{!isDark}"
 					class:d="{isDark}"
