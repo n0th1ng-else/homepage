@@ -74,8 +74,7 @@
 
 		&.header {
 			font-size: $font-size-plus;
-			padding-block: $unit-plus $unit;
-			padding-inline: 0;
+			margin-block: $unit-plus $unit;
 			position: relative;
 		}
 

@@ -82,7 +82,7 @@
 	.article {
 		display: flex;
 		align-items: center;
-		margin-block-end: $unit;
+		padding-block-end: $unit;
 
 		&__title {
 			flex: 1;
