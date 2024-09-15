@@ -29,10 +29,14 @@
 	@import '../../../global';
 
 	.ui-anchor {
-		display: none;
+		opacity: 0;
+
+		&:focus {
+			opacity: 1;
+		}
 
 		&--shown {
-			display: inline;
+			opacity: 1;
 		}
 
 		&__logo {
