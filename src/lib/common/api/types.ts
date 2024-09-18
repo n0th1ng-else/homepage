@@ -7,7 +7,7 @@ export interface Version {
 	versionBuild: string;
 }
 
-export enum ApplicationStatus {
+export const enum ApplicationStatus {
 	OK = 'OK'
 }
 

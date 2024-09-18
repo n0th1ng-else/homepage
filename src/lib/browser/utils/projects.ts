@@ -6,7 +6,7 @@ import catawikiLogo from '../../../assets/images/catawiki-logo.svg';
 import tradeshiftLogo from '../../../assets/images/tradeshift-logo.svg';
 import miroLogo from '../../../assets/images/miro-logo.svg';
 
-export enum Position {
+export const enum Position {
 	Fullstack,
 	Middle,
 	Senior,

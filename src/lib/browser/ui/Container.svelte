@@ -28,7 +28,7 @@
 
 	.ui-container {
 		@include set-font();
-		line-height: $unit-plus;
+		line-height: 1.5;
 		&.full-screen {
 			min-height: 100vh;
 		}

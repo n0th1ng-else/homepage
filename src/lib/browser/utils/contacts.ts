@@ -14,13 +14,13 @@ import habrLogo from '../../../assets/images/habr-logo.svg';
 import devtoLogo from '../../../assets/images/dev-logo.svg';
 import linkedinLogo from '../../../assets/images/linkedin-logo.svg';
 
-enum ContactType {
+const enum ContactType {
 	Location,
 	Email,
 	Url
 }
 
-enum MaterialIcon {
+const enum MaterialIcon {
 	Email = 'email',
 	Location = 'location_on',
 	Time = 'access_time',
