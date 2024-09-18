@@ -1,11 +1,12 @@
-enum RoutePath {
+const enum RoutePath {
 	Home = '',
 	Blog = 'blog',
 	Projects = 'projects',
 	About = 'about',
 	Legal = 'legal',
 	NotFound = '404',
-	Rss = 'rss.xml'
+	Rss = 'rss.xml',
+	ReadingList = 'reading-list'
 }
 
 const toPath = (path?: RoutePath): string => {
@@ -31,6 +32,8 @@ export const legalRoute = toPath(RoutePath.Legal);
 export const rssRoute = toPath(RoutePath.Rss);
 
 export const notFoundRoute = toPath(RoutePath.NotFound);
+
+export const readingListRoute = toPath(RoutePath.ReadingList);
 
 export const toArticle = (id: string): string => `${blogRoute}/${id}`;
 

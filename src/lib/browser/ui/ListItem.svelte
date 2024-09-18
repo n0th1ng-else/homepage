@@ -39,7 +39,7 @@
 		&:before {
 			content: '\2022';
 			font-size: $font-size-bigger;
-			line-height: $unit;
+			line-height: 0.5;
 			padding-inline-end: $unit-half;
 			vertical-align: middle;
 		}
