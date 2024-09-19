@@ -21,6 +21,10 @@
 
 	export let icon = '';
 
+	export let iconOutline = false;
+
+	export let iconSize: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
+
 	export let hint: string | undefined = undefined;
 
 	export let disabled = false;
@@ -29,17 +33,24 @@
 
 	export let external = false;
 
-	export let control = true;
+	export let printVisible = true;
 </script>
 
 {#if href}
-	<Link on:click="{onClick}" {external} url="{href}" {hint} raw inline {control}>
+	<Link on:click="{onClick}" {external} url="{href}" {hint} raw inline {printVisible}>
 		<span class:l="{!isDark}" class:d="{isDark}" class:secondary class:inline class="ui-button">
-			<span class="ui-button__text">
-				<slot />
-			</span>
+			{#if $$slots.default}
+				<span class="ui-button__text">
+					<slot />
+				</span>
+			{/if}
 			{#if icon}
-				<img src="{icon}" class="ui-button__icon" alt="{hint}" />
+				<img
+					src="{icon}"
+					class:outline="{iconOutline}"
+					class="ui-button__icon {iconSize}"
+					alt="{hint}"
+				/>
 			{/if}
 		</span>
 	</Link>
@@ -50,18 +61,23 @@
 		class:d="{isDark}"
 		class:secondary
 		class:inline
-		class:no-print="{!control}"
+		class:no-print="{!printVisible}"
 		on:click="{onClick}"
 		title="{hint}"
 		{disabled}
-		aria-hidden="{control ? undefined : 'true'}"
-		tabindex="{control ? undefined : -1}"
 	>
-		<span class="ui-button__text">
-			<slot />
-		</span>
+		{#if $$slots.default}
+			<span class="ui-button__text">
+				<slot />
+			</span>
+		{/if}
 		{#if icon}
-			<img src="{icon}" class="ui-button__icon" alt="{hint}" />
+			<img
+				src="{icon}"
+				class:outline="{iconOutline}"
+				class="ui-button__icon {iconSize}"
+				alt="{hint}"
+			/>
 		{/if}
 	</button>
 {/if}
@@ -92,8 +108,7 @@
 
 		&.secondary {
 			border: 0;
-			padding-block: 0;
-			padding-inline: $unit-half;
+			padding: $unit-quarter $unit-half;
 		}
 		&.inline {
 			border: 0;
@@ -109,10 +124,18 @@
 
 		&.l {
 			@include button-style($l-primary, $l-accent);
+
+			.outline {
+				@include draw-image-black();
+			}
 		}
 
 		&.d {
 			@include button-style($d-primary, $d-accent);
+
+			.outline {
+				@include draw-image-white();
+			}
 		}
 
 		&__text {
@@ -121,9 +144,26 @@
 		}
 
 		&__icon {
-			height: $unit;
 			object-fit: contain;
-			width: $unit;
+			vertical-align: middle;
+			@include smooth-change(filter, transform);
+
+			&.xl {
+				height: $unit-triple;
+				width: $unit-triple;
+			}
+			&.lg {
+				height: $unit-double;
+				width: $unit-double;
+			}
+			&.md {
+				height: $unit-plus;
+				width: $unit-plus;
+			}
+			&.sm {
+				height: $unit;
+				width: $unit;
+			}
 		}
 	}
 </style>

@@ -60,7 +60,7 @@
 	<div class="network big-screen centered w-space">
 		<SocialNetworks accounts="{$accountsStore}" />
 	</div>
-	<p class="centered w-space">
+	<p class="centered w-space no-print">
 		{#if fcp}
 			<AdditionalText small>{version} // first contentful paint took {fcp}s.</AdditionalText>
 		{:else}
@@ -105,6 +105,12 @@
 
 		.network.big-screen {
 			display: block;
+		}
+	}
+
+	@media print {
+		.no-print {
+			display: none;
 		}
 	}
 </style>

@@ -12,7 +12,7 @@
 
 	export let raw = false;
 
-	export let control = true;
+	export let printVisible = true;
 
 	const dispatch = createEventDispatcher();
 
@@ -35,8 +35,6 @@
 		class:l="{!isDark}"
 		class:d="{isDark}"
 		on:click="{onClick}"
-		aria-hidden="{control ? undefined : 'true'}"
-		tabindex="{control ? undefined : -1}"
 		href="{url}"
 		title="{hint}"
 		target="_blank"
@@ -51,7 +49,7 @@
 		class:l="{!isDark}"
 		class:d="{isDark}"
 		class:inline
-		class:no-print="{!control}"
+		class:no-print="{!printVisible}"
 		on:click="{onClick}"
 		href="{url}"
 		title="{hint}"
