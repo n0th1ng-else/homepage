@@ -24,7 +24,7 @@
 				<img
 					src="{network.image}"
 					alt="{network.title} profile link"
-					class="logo"
+					class="logo no-print"
 					class:l="{!isDark}"
 					class:d="{isDark}"
 				/>
@@ -33,7 +33,13 @@
 	{/each}
 	<p class="social-networks-item">
 		<Link url="{rssRoute}">
-			<img src="{icoRss}" alt="RSS feed" class="logo" class:l="{!isDark}" class:d="{isDark}" />
+			<img
+				src="{icoRss}"
+				alt="RSS feed"
+				class="logo no-print"
+				class:l="{!isDark}"
+				class:d="{isDark}"
+			/>
 		</Link>
 	</p>
 </div>
@@ -74,6 +80,12 @@
 	@media (min-width: $md) {
 		.logo {
 			@include image-container($unit-triple);
+		}
+	}
+
+	@media print {
+		.no-print {
+			display: none;
 		}
 	}
 </style>

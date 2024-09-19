@@ -48,7 +48,7 @@
 		<div class="navigation-wrapper">
 			{#if showBack}
 				<p>
-					<Arrow type="left" size="sm" on:click="{onBack}" hint="Go back to the articles list" />
+					<Arrow type="left" size="md" on:click="{onBack}" hint="Go back to the articles list" />
 				</p>
 			{/if}
 			<p class="logo-container">
@@ -60,7 +60,13 @@
 				<HeaderNavigation {activePath} />
 			</div>
 			<p class="theme">
-				<Button secondary on:click="{switchTheme}" {icon} hint="change theme" />
+				<Button
+					secondary
+					on:click="{switchTheme}"
+					printVisible="{false}"
+					{icon}
+					hint="change theme"
+				/>
 			</p>
 		</div>
 		<div class="navigation">
