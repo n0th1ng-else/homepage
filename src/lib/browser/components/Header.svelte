@@ -7,6 +7,7 @@
 	import { DEFAULT_THEME, persistTheme } from '$lib/common/theme';
 	import Button from '$lib/browser/ui/Button.svelte';
 	import HeaderLink from '$lib/browser/ui/HeaderLink.svelte';
+	import Paragraph from '$lib/browser/ui/Paragraph.svelte';
 	import HeaderNavigation from '$lib/browser/components/HeaderNavigation.svelte';
 	import type { Theme } from '$lib/common/theme';
 
@@ -47,9 +48,9 @@
 	<nav class="header">
 		<div class="navigation-wrapper">
 			{#if showBack}
-				<p>
+				<Paragraph flat>
 					<Arrow type="left" size="md" on:click="{onBack}" hint="Go back to the articles list" />
-				</p>
+				</Paragraph>
 			{/if}
 			<p class="logo-container">
 				<HeaderLink url="{homeRoute}" active="{homeRoute === activePath}">
