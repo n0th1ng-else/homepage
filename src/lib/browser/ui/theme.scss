@@ -44,17 +44,22 @@ $md: 768px;
 $lg: 1024px;
 $xl: 1200px;
 
+// TRANSITIONS
+
+$transition-normal: 0.2s;
+$transition-fast: 0.1s;
+
 // MIXINS
 
 @mixin smooth-change($prop...) {
 	transition-property: $prop;
-	transition-duration: 0.2s;
+	transition-duration: $transition-normal;
 	transition-timing-function: ease;
 }
 
 @mixin smooth-change-fast($prop...) {
 	transition-property: $prop;
-	transition-duration: 0.1s;
+	transition-duration: $transition-fast;
 	transition-timing-function: ease;
 }
 

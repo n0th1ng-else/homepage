@@ -47,11 +47,11 @@
 <header class="header-wrapper">
 	<nav class="header">
 		<div class="navigation-wrapper">
-			{#if showBack}
+			<div class="back-button" class:open="{showBack}">
 				<Paragraph flat>
 					<Arrow type="left" size="md" on:click="{onBack}" hint="Go back to the articles list" />
 				</Paragraph>
-			{/if}
+			</div>
 			<p class="logo-container">
 				<HeaderLink url="{homeRoute}" active="{homeRoute === activePath}">
 					<span class="brand">Nothing Else.</span>
@@ -79,6 +79,76 @@
 <style lang="scss">
 	@import '../ui/theme';
 	@import '../../../global';
+
+	@keyframes slideInAccordion {
+		0% {
+			opacity: 0;
+			max-width: 0;
+			display: none;
+		}
+
+		1% {
+			opacity: 0;
+			max-width: 0;
+			display: inline-block;
+		}
+
+		99% {
+			opacity: 1;
+			max-width: $unit-triple;
+			display: inline-block;
+		}
+
+		100% {
+			opacity: 1;
+			max-width: $unit-triple;
+			display: inline-block;
+		}
+	}
+
+	@keyframes slideOutAccordion {
+		0% {
+			opacity: 1;
+			max-width: $unit-triple;
+			display: inline-block;
+		}
+
+		1% {
+			opacity: 1;
+			max-width: $unit-triple;
+			display: inline-block;
+		}
+
+		99% {
+			opacity: 0;
+			max-width: 0;
+			display: inline-block;
+		}
+
+		100% {
+			opacity: 0;
+			max-width: 0;
+			display: none;
+		}
+	}
+
+	.back-button {
+		animation-name: slideOutAccordion;
+		animation-duration: $transition-fast;
+
+		opacity: 0;
+		max-width: 0;
+		display: none;
+
+		&.open {
+			animation-name: slideInAccordion;
+			animation-duration: $transition-fast;
+
+			opacity: 1;
+			max-width: $unit-triple;
+			display: inline-block;
+		}
+	}
 
 	.header {
 		padding-block-end: $unit-triple;
