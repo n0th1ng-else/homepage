@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
+	import type { TextAreaSize } from '$lib/browser/ui/types';
 
 	export let text = '';
 	export let placeholder = '';
-	export let size: 's' | 'm' | 'l' | 'xl' = 'm';
+	export let size: TextAreaSize = 'md';
 
 	let ref: HTMLTextAreaElement;
 
@@ -49,15 +50,15 @@
 			font-weight: $font-weight-bold;
 		}
 
-		&--l {
+		&--lg {
 			font-size: $font-size-bigger;
 		}
 
-		&--m {
+		&--md {
 			font-size: $font-size-big;
 		}
 
-		&--s {
+		&--sm {
 			font-size: $font-size-plus;
 		}
 	}

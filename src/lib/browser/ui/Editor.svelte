@@ -59,11 +59,11 @@
 				<TextArea bind:text="{title}" size="xl" placeholder="Create a title..." />
 			</p>
 			<p>
-				<TextArea bind:text="{keywords}" size="m" placeholder="Add a few keywords..." />
+				<TextArea bind:text="{keywords}" size="md" placeholder="Add a few keywords..." />
 			</p>
 		</div>
 		<p class="editor__content">
-			<TextArea bind:text="{content}" size="s" placeholder="Start the article..." />
+			<TextArea bind:text="{content}" size="sm" placeholder="Start the article..." />
 		</p>
 	{/if}
 </div>

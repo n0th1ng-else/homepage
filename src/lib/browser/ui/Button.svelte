@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, createEventDispatcher } from 'svelte';
 	import { onThemeChange, isDarkTheme } from '$lib/browser/stores/theme';
+	import type { IconSize } from '$lib/browser/ui/types';
 	import Link from './Link.svelte';
 
 	let isDark = true;
@@ -23,7 +24,7 @@
 
 	export let iconOutline = false;
 
-	export let iconSize: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
+	export let iconSize: IconSize = 'sm';
 
 	export let hint: string | undefined = undefined;
 
