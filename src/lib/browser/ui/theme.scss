@@ -1,6 +1,7 @@
 // COLORS
 $cl-white: #ffffff;
-$cl-white-light: #fffeff;
+$cl-white-dark: #fffeff;
+$cl-white-darker: #f8f8f7;
 
 $cl-black: #000000;
 $cl-black-light: #1f1f1f;
@@ -20,21 +21,34 @@ $cl-grey-darker: #f5f5ac30;
 
 $cl-yellow-darkest: #a2a28c5e;
 
+$cl-purple: #9a0fc4;
+$cl-purple-dark: #7157a8;
+
 // DARK Theme
 
 $d-background: #072638;
-$d-primary: $cl-white;
+$d-primary: $cl-white-darker;
 $d-secondary: $cl-grey;
 $d-tertiary: #9ccafb;
 $d-accent: #11cc9e;
 
+// Dark specifics
+$d-button-primary: $d-primary;
+$d-button-accent: $d-accent;
+$d-button-active: #23466a;
+
 // LIGHT Theme
 
-$l-background: $cl-white;
-$l-primary: #36093b;
+$l-background: $cl-white-darker;
+$l-primary: #222222;
 $l-secondary: $cl-grey-dark;
 $l-tertiary: #fa7176;
-$l-accent: #9a0fc4;
+$l-accent: $cl-purple;
+
+// Light specifics
+$l-button-primary: $l-primary;
+$l-button-accent: $l-accent;
+$l-button-active: #ffcdcf;
 
 // RESPONSIVE
 

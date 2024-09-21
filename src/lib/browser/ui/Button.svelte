@@ -86,7 +86,7 @@
 	@import './theme';
 	@import '../../../global';
 
-	@mixin button-style($primary, $secondary) {
+	@mixin button-style($primary, $secondary, $active) {
 		@include smooth-change(border-color, color);
 
 		border-color: $primary;
@@ -95,6 +95,10 @@
 		&:hover {
 			border-color: $secondary;
 			color: $secondary;
+		}
+
+		&:active {
+			background-color: $active;
 		}
 	}
 
@@ -108,8 +112,10 @@
 
 		&.secondary {
 			border: 0;
-			padding: $unit-quarter $unit-half;
+			border-radius: $unit-half;
+			padding: $unit-quarter $unit-quarter;
 		}
+
 		&.inline {
 			border: 0;
 			display: inline;
@@ -123,7 +129,7 @@
 		}
 
 		&.l {
-			@include button-style($l-primary, $l-accent);
+			@include button-style($l-button-primary, $l-button-accent, $l-button-active);
 
 			.outline {
 				@include draw-image-black();
@@ -131,7 +137,7 @@
 		}
 
 		&.d {
-			@include button-style($d-primary, $d-accent);
+			@include button-style($d-button-primary, $d-button-accent, $d-button-active);
 
 			.outline {
 				@include draw-image-white();
