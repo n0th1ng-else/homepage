@@ -23,7 +23,7 @@
 	<!--			</HeaderLink>-->
 	<!--		</li>-->
 	<li>
-		<HeaderLink url="{aboutRoute}" active="{aboutRoute === activePath}">
+		<HeaderLink url="{aboutRoute}" active="{aboutRoute === activePath}" label="About me">
 			<span class="nav__item">It's me.</span>
 		</HeaderLink>
 	</li>

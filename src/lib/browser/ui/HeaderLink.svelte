@@ -4,6 +4,7 @@
 
 	export let url = 'javascript:void(0);';
 	export let active = false;
+	export let label = '';
 
 	let isDark = true;
 
@@ -12,7 +13,14 @@
 	onDestroy(() => unsubscribeTheme());
 </script>
 
-<a class="ui-header-link" class:active class:l="{!isDark}" class:d="{isDark}" href="{url}">
+<a
+	class="ui-header-link"
+	class:active
+	class:l="{!isDark}"
+	class:d="{isDark}"
+	href="{url}"
+	aria-label="{label}"
+>
 	<slot />
 </a>
 

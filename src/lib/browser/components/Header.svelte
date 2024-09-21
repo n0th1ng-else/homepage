@@ -53,7 +53,11 @@
 				</Paragraph>
 			</div>
 			<p class="logo-container">
-				<HeaderLink url="{homeRoute}" active="{homeRoute === activePath}">
+				<HeaderLink
+					url="{homeRoute}"
+					active="{homeRoute === activePath}"
+					label="Go to the home page"
+				>
 					<span class="brand">Nothing Else.</span>
 				</HeaderLink>
 			</p>
