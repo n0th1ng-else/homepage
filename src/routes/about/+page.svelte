@@ -44,7 +44,7 @@
 		</p>
 	{/if}
 	<div class="section">
-		<Paragraph>
+		<Paragraph flat>
 			Hey there, it's Sergey. I'm a software engineer from Amsterdam, the Netherlands. Originally
 			came from Russia, I explore and learn everything related to the Frontend, NodeJS. These days I
 			develop UI with React and write some automation tools that keep the company ecosystem
@@ -53,7 +53,7 @@
 		</Paragraph>
 	</div>
 	<div class="section">
-		<Paragraph>
+		<Paragraph flat>
 			In my blog, you can find some explorations and interesting cases. I mostly talk about React,
 			Angular, and NodeJS. Well, sometimes it's about soft skills. Sometimes it's pretty random
 			things.
@@ -62,7 +62,7 @@
 
 	<SubTitle id="connect">Connect</SubTitle>
 	<div class="section">
-		<Paragraph>
+		<Paragraph flat>
 			You can contact me by email at <EmailElement /> to say hi! I always appreciate meeting new people.
 			You can find all the links in the footer of each page
 			<Button inline on:click="{scroll}" hint="scroll to the bottom">⬇️</Button>. Follow me and send

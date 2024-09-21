@@ -5,6 +5,7 @@
 	import AdditionalText from '$lib/browser/ui/AdditionalText.svelte';
 	import Footer from '$lib/browser/ui/Footer.svelte';
 	import Link from '$lib/browser/ui/Link.svelte';
+	import Paragraph from '$lib/browser/ui/Paragraph.svelte';
 	import { getLinkedInContact } from '$lib/browser/utils/contacts';
 	import { getVersion } from '$lib/common/version';
 	import { legalRoute } from '$lib/common/routes';
@@ -27,21 +28,21 @@
 	<div class="network small-screen centered w-space">
 		<SocialNetworks accounts="{$accountsStore}" />
 	</div>
-	<div class="legal centered w-space">
-		<p class="legal__part">
+	<div class="legal w-space">
+		<Paragraph centered>
 			<AdditionalText>
 				My posts reflect my own views and may not be those of my employer
 			</AdditionalText>
-		</p>
-		<p class="legal__part">
+		</Paragraph>
+		<Paragraph centered>
 			<AdditionalText>
 				Unless otherwise noted, all code is free to use under the
 				<Link inline url="{legalRoute}">MIT License</Link>
 			</AdditionalText>
-		</p>
+		</Paragraph>
 	</div>
 	<div class="author on-right w-space">
-		<p>
+		<Paragraph>
 			{#if profileLink}
 				<AdditionalText
 					>© {year} <Link inline external url="{profileLink}">Sergey Nikitin</Link></AdditionalText
@@ -49,24 +50,24 @@
 			{:else}
 				<AdditionalText>© {year} Sergey Nikitin</AdditionalText>
 			{/if}
-		</p>
-		<p>
+		</Paragraph>
+		<Paragraph>
 			<AdditionalText>
 				Made with <Link inline external url="https://svelte.dev">Svelte</Link>
 				<Link inline external url="https://kit.svelte.dev">Kit</Link> with 🧡
 			</AdditionalText>
-		</p>
+		</Paragraph>
 	</div>
 	<div class="network big-screen centered w-space">
 		<SocialNetworks accounts="{$accountsStore}" />
 	</div>
-	<p class="centered w-space no-print">
+	<Paragraph centered printVisible="{false}">
 		{#if fcp}
 			<AdditionalText small>{version} // first contentful paint took {fcp}s.</AdditionalText>
 		{:else}
 			<AdditionalText small>{version}</AdditionalText>
 		{/if}
-	</p>
+	</Paragraph>
 </Footer>
 
 <style lang="scss">
@@ -88,10 +89,6 @@
 
 	.legal {
 		text-align: center;
-
-		&__part {
-			padding: $unit-quarter;
-		}
 	}
 
 	.network.big-screen {
@@ -105,12 +102,6 @@
 
 		.network.big-screen {
 			display: block;
-		}
-	}
-
-	@media print {
-		.no-print {
-			display: none;
 		}
 	}
 </style>

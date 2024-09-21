@@ -53,7 +53,7 @@
 						<li>
 							<div class="article">
 								<div class="article__title">
-									<Paragraph>
+									<Paragraph flat>
 										<Link inline url="{getUrl(item)}">
 											{getTitle(item)}
 										</Link>
